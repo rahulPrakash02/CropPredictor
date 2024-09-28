@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Header with Text and Button on Image</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Roboto:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../static/style.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#" style="font-family: 'Berkshire Swash', cursive; font-size: 30px";>AgriTex</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="header">
+    <img src="../static/header.jpg" alt="Background Image">
+    <div class="header-text">
+      <h1 style="font-family: 'Berkshire Swash', cursive; font-size: 100px;">AgriTex</h1>
+      <p>Precision Agriculture for a Social Cause</p>
+      <button class="btn btn-warning" onclick="window.location.href='#aboutus'"><strong>About Us</strong></button>
+    </div>
+  </header>
+
+  <div class="body-section" id = "aboutus">
+        <div class="left-text">
+          <h1>AgriTex</h1><br>
+          <p>AgriTex is an innovative crop
+            recommendation system designed for farmers
+            to make informed decisions about crop
+            selection based on soil and weather
+            conditions. It serves as a valuable tool in the
+            field of precision agriculture, aiding in
+            optimized farming practices.</p><br>
+            <button class="btn btn-dark" onclick="window.location.href='#formfill'"><strong><text style="font-family: 'Berkshire Swash';">Try It!</text></strong></button>
+        </div>
+        <div class="right-pic">
+          <img src="../static/farmer_stockpic.jpg" class = "animated-image" alt="Image">
+        </div>
+      </div>
+
+      <div class="body-section" id = "formfill">
+        <div class="form-container">
+          <h2 style="font-family: 'Berkshire Swash'; font-size: 25pt;">Fill out the Form</h2>
+          <form action="/predict" method="POST">
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="nitrogen">Nitrogen:</label>
+                  <input type="text" name="nitrogen" id="nitrogen" class = "form-control">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="phosphorus">Phosphorus:</label>
+                  <input type="text" name="phosphorus" id="phosphorus" class = "form-control">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="potassium">Potassium:</label>
+                  <input type="text" name="potassium" id="potassium" class = "form-control">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="temperaturen">Temperature:</label>
+                  <input type="text" name="temperature" id="temperature" class = "form-control">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="humidity">Humidity:</label><br>
+                  <input type="text" name="humidity" id="humidity" class = "form-control">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                  <label for="ph">pH:</label>
+                  <input type="text" name="ph" id="ph" class = "form-control">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rainfall">Rainfall:</label>
+              <input type="text" name="rainfall" id="rainfall" class = "form-control">
+            </div>
+            <button type="submit" class="btn btn-dark"><strong><text style="font-family: 'Berkshire Swash';">Recommend!</text></strong></button>
+          </form>
+        </div>
+      </div>
+
+      {% if prediction %}
+  <div class="body-section-two" id = "recos">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="../static/crops/{{ prediction[0][0] }}.png" class="card-img-top" alt="Card Image 1">
+            <div class="card-body">
+              <h5 class="card-title"><strong>{{ prediction[0][0] }}</strong></h5>
+              <p class="card-text">Price: <strong>{{ dict[prediction[0][0]] }}</strong> INR per Quintal</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="../static/crops/{{ prediction[0][1] }}.png" class="card-img-top" alt="Card Image 2">
+            <div class="card-body">
+              <h5 class="card-title"><strong>{{ prediction[0][1] }}</strong></h5>
+              <p class="card-text">Price: <strong>{{ dict[prediction[0][1]] }}</strong> INR per Quintal</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="../static/crops/{{ prediction[0][2] }}.png" class="card-img-top" alt="Card Image 3">
+            <div class="card-body">
+              <h5 class="card-title"><strong>{{ prediction[0][2] }}</strong></h5>
+              <p class="card-text">Price: <strong>{{ dict[prediction[0][2]] }}</strong> INR per Quintal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Display predictions -->
+    <!--<p>The recommended crop is: {{ prediction[0][0] }}</p>
+    <p>The recommended crop is: {{ prediction[0][1] }}</p>
+    <p>The recommended crop is: {{ prediction[0][2] }}</p>-->
+</div>
+{% endif %}
+
+<div class="body-section">
+  <div class = "contact">
+    <h1 style = "font-size: 35pt; font-family: 'Berkshire Swash';">Creator Contact</h1>
+    <p style="font-family: 'Roboto';">rp87official@gmail.com</p>
+  </div>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+  
